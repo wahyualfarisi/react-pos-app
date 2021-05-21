@@ -1,10 +1,11 @@
 import './App.scss';
+import Layout from './hoc/Layout';
 
 function App() {
   return (
-    <div className="App">
-      
-    </div>
+    <Layout>
+      This is main page
+    </Layout>
   );
 }
 

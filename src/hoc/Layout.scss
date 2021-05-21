@@ -1,0 +1,10 @@
+.Layout {
+  display: grid;
+  grid-template-rows: 4rem minmax(90vh, min-content);
+  grid-template-columns: 20vw 1fr 25rem;
+}
+
+.Main {
+  grid-row: 2 / -1;
+  grid-column: 2 / 3;
+}
