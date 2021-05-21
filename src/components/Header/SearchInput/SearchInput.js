@@ -4,7 +4,10 @@ import './SearchInput.scss';
 function SearchInput() {
     return (
         <div className="SearchInput">
-            Search Input
+            <input 
+                className="SearchInput__item"
+                placeholder="Cari makanan, minuman dll"
+            />
         </div>
     )
 }
