@@ -6,6 +6,8 @@
   --color-grey-dark-2: #b5b2b2;
   --color-grey-dark-3: #c2c6c4;
   --color-grey-dark-4: #888585;
+
+  --color-text-grey: #7a8a87;
 }
 
 *,
@@ -28,4 +30,17 @@ body {
   line-height: 1.6;
   font-size: 62.5%;
   background-color: #f1f3f3;
+}
+
+.mb-small {
+  margin-bottom: 1rem;
+}
+.mb-medium {
+  margin-bottom: 2rem;
+}
+.mb-large {
+  margin-bottom: 3rem;
+}
+.mb-huge {
+  margin-top: 3.5rem;
 }

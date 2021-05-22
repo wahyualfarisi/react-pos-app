@@ -5,3 +5,38 @@
   grid-row: 2 / -1;
   grid-column: 1 / 2;
 }
+
+.Navigation {
+  margin: 2rem 0 2rem 2rem;
+
+  &__items {
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+    font-size: 0.9rem;
+    font-family: inherit;
+    font-weight: 300;
+
+    &_item {
+      &:not(:last-child) {
+        margin-bottom: 2rem;
+      }
+      &_link {
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+        transition: all ease-in 0.2s;
+        color: var(--color-text-grey);
+
+        &:hover {
+          transform: translateX(0.7rem);
+        }
+      }
+
+      &_icon {
+        margin-right: 1rem;
+        color: var(--color-text-grey);
+      }
+    }
+  }
+}
