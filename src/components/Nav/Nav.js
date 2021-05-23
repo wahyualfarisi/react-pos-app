@@ -5,7 +5,6 @@ import { FiCircle } from 'react-icons/fi';
 function Nav() {
     return (
         <div className="Nav">
-
             <div className="Navigation">
                 <h1 className="mb-medium">Menu</h1>
                 <ul className="Navigation__items">
