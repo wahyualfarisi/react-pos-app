@@ -5,9 +5,8 @@ function Header() {
     return (
         <header className="Header">
              <div className="Header__logo">
-                LOGO
+                <h1>REACT POS</h1>
              </div>
-
         </header>
     )
 }
