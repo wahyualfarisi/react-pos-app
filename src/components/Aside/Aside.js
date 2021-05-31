@@ -4,7 +4,7 @@ import './Aside.scss';
 function Aside() {
     return (
         <div className="Aside">
-            Aside
+            
         </div>
     )
 }

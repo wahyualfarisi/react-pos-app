@@ -9,6 +9,10 @@
 .Navigation {
   margin: 2rem 0 2rem 2rem;
 
+  &__heading {
+    color: var(--color-primary);
+  }
+
   &__items {
     display: flex;
     flex-direction: column;
