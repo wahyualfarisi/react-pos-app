@@ -1,3 +1,5 @@
+@import "./../../variables";
+
 .Nav {
   background-color: var(--color-grey-light-1);
   border: 2px solid #eee;
@@ -9,10 +11,23 @@
   width: 20rem;
   height: 100vh;
   overflow: auto;
+  transition: 850ms;
+
+  @media only screen and (max-width: $bp-largest) {
+    width: 15rem;
+  }
+
+  @media only screen and (max-width: $bp-medium) {
+    left: -100%;
+  }
 }
 
 .Navigation {
   margin: 2rem;
+
+  @media only screen and (max-width: $bp-largest) {
+    margin: 0.4rem;
+  }
 
   &__heading {
     color: var(--color-primary);
@@ -51,6 +66,9 @@
         p {
           color: #111;
           font-size: 1.1rem;
+          @media only screen and (max-width: $bp-largest) {
+            font-size: 0.8rem;
+          }
         }
 
         button {

@@ -1,13 +1,29 @@
+@import "./../variables";
 .Layout {
   display: grid;
   grid-template-rows: 4rem minmax(100vh, min-content);
-  grid-template-columns: minmax(20rem, min-content) minmax(40rem, 1fr) minmax(
+  grid-template-columns: minmax(20rem, min-content) minmax(30vw, 1fr) minmax(
       25rem,
       min-content
     );
+
+  @media only screen and (max-width: $bp-largest) {
+    grid-template-columns: minmax(15rem, min-content) minmax(30vw, 1fr) minmax(
+        15rem,
+        min-content
+      );
+  }
+
+  @media only screen and (max-width: $bp-verysmall) {
+    grid-template-columns: minmax(30vw, 1fr) minmax(15rem, min-content);
+  }
 }
 
 .Main {
   grid-row: 2 / -1;
   grid-column: 2 / 3;
+
+  @media only screen and (max-width: $bp-medium) {
+    grid-column: 1 / 3;
+  }
 }
