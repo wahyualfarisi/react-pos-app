@@ -1,6 +1,7 @@
 import React from 'react';
 import MenuData from './MenuData';
 import './Menu.scss';
+import BottomOrder from '../../components/BottomOrder/BottomOrder';
 
 
 function Menu() {
@@ -46,6 +47,8 @@ function Menu() {
                 })}
                 
             </div>
+
+            <BottomOrder />
         </div>
     )
 }

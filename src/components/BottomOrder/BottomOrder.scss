@@ -1,0 +1,52 @@
+@import "./../../variables";
+.BottomOrder {
+  position: fixed;
+  content: "";
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  @media only screen and (min-width: $bp-verysmall) {
+    display: none;
+  }
+}
+
+.BottomContainer {
+  background-color: #fff;
+  box-shadow: 2rem 3rem 4rem rgba(#111, 0.9);
+
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  grid-column-gap: 1rem;
+  padding: 1rem 2rem;
+
+  &__info {
+    h1 {
+      font-size: 1.2rem;
+      font-weight: 700;
+    }
+
+    p {
+      font-size: 0.7rem;
+    }
+  }
+
+  &__btn {
+    justify-self: end;
+    border: none;
+    outline: none;
+    background-color: var(--color-primary);
+    color: #fff;
+    font-weight: 800;
+    padding: 1rem;
+    border-radius: 15px;
+    box-shadow: 2px 2px 13px rgba(#111, 0.6);
+    transition: all ease-out 0.5s;
+
+    &:disabled {
+      background-color: #ddd;
+      color: #ccc;
+      box-shadow: none;
+    }
+  }
+}

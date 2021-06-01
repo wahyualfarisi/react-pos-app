@@ -47,7 +47,7 @@ function Aside() {
                         <h1>Rp. 530,000</h1>
                         <p>5 Items</p>
                     </div>
-                    <button>BAYAR</button>
+                    <button>ORDER NOW</button>
                 </div>
             </div>
         </div>
