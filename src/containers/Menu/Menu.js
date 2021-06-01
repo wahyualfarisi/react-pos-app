@@ -1,10 +1,14 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import MenuData from './MenuData';
 import './Menu.scss';
 import BottomOrder from '../../components/BottomOrder/BottomOrder';
+import OpenOrderMobileContext from './../../context/open-order-mobile-context';
 
 
 function Menu() {
+
+    const OpenOrderMobileCTX = useContext(OpenOrderMobileContext);
+
     return (
         <div className="Menu">
             <div className="Menu__heading">
@@ -48,7 +52,7 @@ function Menu() {
                 
             </div>
 
-            <BottomOrder />
+            <BottomOrder onClick={OpenOrderMobileCTX.onToggle} />
         </div>
     )
 }

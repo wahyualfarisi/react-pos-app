@@ -1,11 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import './Aside.scss';
 import { FiEdit  } from 'react-icons/fi';
 import AsideData from './AsideData';
+import OpenOrderMobileContext from './../../context/open-order-mobile-context';
 
 function Aside() {
+
+    const OrderMenuMobileCtx = useContext(OpenOrderMobileContext);
+
     return (
-        <div className="Aside">
+        <div className={OrderMenuMobileCtx.isOpen ? 'Aside Aside__open' : 'Aside'}>
             <div className="Order">
                 <div className="Order__heading">
                     <h1>Order List (1)</h1>
