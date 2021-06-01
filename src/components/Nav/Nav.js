@@ -8,7 +8,12 @@ function Nav() {
     return (
         <div className="Nav">
             <div className="Navigation">
-                <h1 className="Navigation__heading mb-medium">Transaction List</h1>
+                <h1 className="Navigation__heading mb-medium">Transaction History</h1>
+                {data.length === 0 && (
+                <div className="EmptyTransaction">
+                    <h3>You have not made any transaction yet</h3>
+                </div>
+                )}
                 <ul className="Navigation__items">
                     {data.map( (item, i) => {
                         return (
@@ -27,6 +32,7 @@ function Nav() {
                     })}
                     
                 </ul>
+                
             </div>
         </div>
     )
