@@ -12,7 +12,7 @@ function Aside() {
         <div className={OrderMenuMobileCtx.isOpen ? 'Aside Aside__open' : 'Aside'}>
             <div className="Order">
                 <div className="Order__heading">
-                    <h1>Order List (1)</h1>
+                    <h1>Order List (14)</h1>
                 </div>
 
                 <div className="Order__lists">
@@ -51,7 +51,8 @@ function Aside() {
                         <h1>Rp. 530,000</h1>
                         <p>5 Items</p>
                     </div>
-                    <button>ORDER NOW</button>
+                    <button className="Order__btncancel">CANCEL</button>
+                    <button className="Order__gopay">ORDER NOW</button>
                 </div>
             </div>
         </div>
