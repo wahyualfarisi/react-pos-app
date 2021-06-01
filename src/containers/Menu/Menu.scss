@@ -1,8 +1,38 @@
 .Menu {
   padding: 1rem;
-  h1 {
-    font-size: 3.4rem;
-    color: var(--color-grey-dark-4);
+
+  &__heading {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    h1 {
+      font-size: 3.4rem;
+      color: var(--color-grey-dark-4);
+    }
+
+    input {
+      justify-self: end;
+      align-self: center;
+
+      border: none;
+      outline: none;
+      padding: 0.5rem 1rem;
+      border-radius: 0.4rem;
+      background-color: var(--color-grey-dark-1);
+
+      &::-webkit-input-placeholder {
+        /* Edge */
+        color: var(--color-grey-dark-4);
+      }
+
+      &:-ms-input-placeholder {
+        /* Internet Explorer 10-11 */
+        color: var(--color-grey-dark-4);
+      }
+
+      &::placeholder {
+        color: var(--color-grey-dark-4);
+      }
+    }
   }
 
   &__categorys {

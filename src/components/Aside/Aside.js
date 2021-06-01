@@ -1,6 +1,7 @@
 import React from 'react';
 import './Aside.scss';
 import { FiEdit  } from 'react-icons/fi';
+import AsideData from './AsideData';
 
 function Aside() {
     return (
@@ -11,37 +12,41 @@ function Aside() {
                 </div>
 
                 <div className="Order__lists">
-                    <div className="Order__lists-item">
-                        <div className="Order__Menu">
-                            <h3>Roti Bakar Spesial</h3>
-                            <p>Rp. 130.000</p>
-                            <button>
-                                <FiEdit />
-                                Add Notes
-                            </button>
+                    {AsideData.map( (item, i) => {
+                        return (
+                        <div key={i} className="Order__lists-item">
+                            <div className="Order__Menu">
+                                <h3>{item.name}</h3>
+                                <p className="mb-small">{item.price}</p>
+                                {!item.notes && (
+                                    <button>
+                                        <FiEdit />
+                                        Add Notes
+                                    </button>
+                                )}
+                                {item.notes && (
+                                    <>
+                                    <p>{item.notes}</p>
+                                    <button><FiEdit /> Edit Notes</button>
+                                    </>
+
+                                )}
+                            </div>
+                            <div className="Order__Action">
+                                <button>-</button>
+                                <span>{item.qty}</span>
+                                <button>+</button>
+                            </div>
                         </div>
-                        <div className="Order__Action">
-                            <button>-</button>
-                            <span>2</span>
-                            <button>+</button>
-                        </div>
+                        )
+                    })}
+                </div>
+                <div className="Order__totals">
+                    <div>
+                        <h3>Total</h3>
+                        <h1>Rp. 530,000</h1>
                     </div>
-                    <div className="Order__lists-item">
-                        <div className="Order__Menu">
-                            <h3>Pisang Goreng Spesial</h3>
-                            <p>Rp. 30.000</p>
-                            <button>
-                                <FiEdit />
-                                Add Notes
-                            </button>
-                        </div>
-                        <div className="Order__Action">
-                            <button>-</button>
-                            <span>2</span>
-                            <button>+</button>
-                        </div>
-                    </div>
-                    
+                    <button>BAYAR</button>
                 </div>
             </div>
         </div>

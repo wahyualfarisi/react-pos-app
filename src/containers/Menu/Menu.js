@@ -6,7 +6,12 @@ import './Menu.scss';
 function Menu() {
     return (
         <div className="Menu">
-            <h1>Menu</h1>
+            <div className="Menu__heading">
+                <h1>Menu</h1>
+                <input 
+                    placeholder="Search Makanan, Minumal, dll"
+                />
+            </div>
             <ul className="Menu__categorys">
                 <li className="Menu__categorys-item">
                     <button className="Menu__categorys-btn Menu__categorys-btn-active">All</button>
