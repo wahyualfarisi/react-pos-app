@@ -13,6 +13,7 @@ function Aside() {
             <div className="Order">
                 <div className="Order__heading">
                     <h1>Order List (14)</h1>
+                    {OrderMenuMobileCtx.isOpen && <button onClick={OrderMenuMobileCtx.onToggle}>Close</button>}
                 </div>
 
                 <div className="Order__lists">
