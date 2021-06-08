@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/wahyualfarisi/react-pos-app/static/css/main.7b159ff0.chunk.css",
+    "main.js": "/wahyualfarisi/react-pos-app/static/js/main.5516b362.chunk.js",
+    "main.js.map": "/wahyualfarisi/react-pos-app/static/js/main.5516b362.chunk.js.map",
+    "runtime-main.js": "/wahyualfarisi/react-pos-app/static/js/runtime-main.ec6701f2.js",
+    "runtime-main.js.map": "/wahyualfarisi/react-pos-app/static/js/runtime-main.ec6701f2.js.map",
+    "static/js/2.f370155b.chunk.js": "/wahyualfarisi/react-pos-app/static/js/2.f370155b.chunk.js",
+    "static/js/2.f370155b.chunk.js.map": "/wahyualfarisi/react-pos-app/static/js/2.f370155b.chunk.js.map",
+    "static/js/3.89611ec3.chunk.js": "/wahyualfarisi/react-pos-app/static/js/3.89611ec3.chunk.js",
+    "static/js/3.89611ec3.chunk.js.map": "/wahyualfarisi/react-pos-app/static/js/3.89611ec3.chunk.js.map",
+    "index.html": "/wahyualfarisi/react-pos-app/index.html",
+    "static/css/main.7b159ff0.chunk.css.map": "/wahyualfarisi/react-pos-app/static/css/main.7b159ff0.chunk.css.map",
+    "static/js/2.f370155b.chunk.js.LICENSE.txt": "/wahyualfarisi/react-pos-app/static/js/2.f370155b.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.ec6701f2.js",
+    "static/js/2.f370155b.chunk.js",
+    "static/css/main.7b159ff0.chunk.css",
+    "static/js/main.5516b362.chunk.js"
+  ]
+}
