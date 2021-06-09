@@ -5,7 +5,7 @@ import BottomOrder from '../../components/BottomOrder/BottomOrder';
 import OpenOrderMobileContext from './../../context/open-order-mobile-context';
 
 
-function Menu() {
+const  Menu = () => {
 
     const OpenOrderMobileCTX = useContext(OpenOrderMobileContext);
 
@@ -14,7 +14,7 @@ function Menu() {
             <div className="Menu__heading">
                 <h1>Menu</h1>
                 <input 
-                    placeholder="Search Makanan, Minumal, dll"
+                    placeholder="Search Makanan, Minuman, dll"
                 />
             </div>
             <ul className="Menu__categorys">
