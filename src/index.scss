@@ -52,3 +52,11 @@ body {
 .mb-huge {
   margin-top: 3.5rem;
 }
+
+.Loader {
+  &-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
