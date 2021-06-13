@@ -32,8 +32,8 @@ const menu = (state = initialState, action) => {
             return {
                 ...state,
                 isLoading: false,
-                error: null,
-                data: null
+                data: null,
+                error: action.error,
             }
 
         default:

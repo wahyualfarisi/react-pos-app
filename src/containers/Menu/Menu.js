@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { getMenu } from './../../store/actions/menu';
 import './Menu.scss';
@@ -13,16 +13,37 @@ const  Menu = ({
     error,
     data
 }) => {
+
+    const [query, setQuery] = useState({
+        category: [ 
+            { name: 'All' }, 
+            { name: 'Makanan' }, 
+            { name: 'Minuman' } 
+        ],
+        isActiveCategory: 'All',
+        searchText: null,
+        page: 0,
+        size: 100
+    });
  
 
     useEffect( () => {
         onLoadMenu({
-            page: 0,
-            size: 100
+            page: query.page,
+            size: query.size
         })
-    }, [ onLoadMenu ])
+    }, [ query, onLoadMenu ])
 
     const OpenOrderMobileCTX = useContext(OpenOrderMobileContext);
+
+    const setActiveMenu = (menuName) => {
+        setQuery(prevState => {
+            return {
+                ...prevState,
+                isActiveCategory: menuName
+            }
+        })
+    }
 
     return (
         <div className="Menu">
@@ -33,15 +54,17 @@ const  Menu = ({
                 />
             </div>
             <ul className="Menu__categorys">
-                <li className="Menu__categorys-item">
-                    <button className="Menu__categorys-btn Menu__categorys-btn-active">All</button>
-                </li>
-                <li className="Menu__categorys-item">
-                    <button className="Menu__categorys-btn">Makanan</button>
-                </li>
-                <li className="Menu__categorys-item">
-                    <button className="Menu__categorys-btn">Minuman</button>
-                </li>
+                {query.category.map((item, _) => {
+                    return (
+                    <li key={_} className="Menu__categorys-item">
+                        <button 
+                            onClick={() => setActiveMenu(item.name)}
+                            className={`Menu__categorys-btn ${query.isActiveCategory === item.name && `Menu__categorys-btn-active`}`}>
+                            {item.name}
+                        </button>
+                    </li>
+                    )
+                })}
             </ul>
 
             <div className="Menu__lists">
@@ -69,6 +92,8 @@ const  Menu = ({
                     <Loader />
                 </div>
                 )}
+
+                {error && <p>Something went wrong!</p>}
             </div>
 
             <BottomOrder onClick={OpenOrderMobileCTX.onToggle} />

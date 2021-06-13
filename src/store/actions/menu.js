@@ -11,12 +11,11 @@ export const getMenu = query => {
         dispatch( getLoadStart() );
         fetchMenu(query)
         .then(res => {
-            console.log(res);
             dispatch({ type: LOAD_MENU_SUCCESS, payload: res.data.data })
         })
         .catch(err => {
             console.log(err);
-            dispatch({ type: LOAD_MENU_FAILED, err: err.message })
+            dispatch({ type: LOAD_MENU_FAILED, error: err.message })
         })
     }
 }
