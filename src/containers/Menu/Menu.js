@@ -5,7 +5,29 @@ import './Menu.scss';
 import BottomOrder from '../../components/BottomOrder/BottomOrder';
 import OpenOrderMobileContext from './../../context/open-order-mobile-context';
 import Loader from '../../components/UI/Loader/Loader';
+import Modal from './../../components/UI/Modal/Modal';
+import Categorys from '../../components/Categorys/Categorys';
 
+
+const MenuItem = ({ item }) => {
+    return (
+        <div className="Menu__lists-item">
+            <figure>
+                <img 
+                    className="Menu__lists-item-img"
+                    src={`http://139.162.23.206:8080/${item.imgUrl}`} alt={item.name} 
+                />
+            </figure>
+            <div className="Menu__lists-item-info">
+                <div>
+                    <h4>{item.name.length > 20 ? `${item.name.slice(0, 20)}...` : item.name }</h4>
+                    <p>{item.price}</p>
+                </div>
+                <button>ADD</button>
+            </div>
+        </div>
+    );
+}
 
 const  Menu = ({
     onLoadMenu,
@@ -31,7 +53,8 @@ const  Menu = ({
         onLoadMenu({
             page: query.page,
             size: query.size
-        })
+        });
+
     }, [ query, onLoadMenu ])
 
     const OpenOrderMobileCTX = useContext(OpenOrderMobileContext);
@@ -47,55 +70,38 @@ const  Menu = ({
 
     return (
         <div className="Menu">
-            <div className="Menu__heading">
+
+            <section className="Menu__heading">
                 <h1>Menu</h1>
                 <input 
                     placeholder="Search Makanan, Minuman, dll"
                 />
-            </div>
-            <ul className="Menu__categorys">
-                {query.category.map((item, _) => {
-                    return (
-                    <li key={_} className="Menu__categorys-item">
-                        <button 
-                            onClick={() => setActiveMenu(item.name)}
-                            className={`Menu__categorys-btn ${query.isActiveCategory === item.name && `Menu__categorys-btn-active`}`}>
-                            {item.name}
-                        </button>
-                    </li>
-                    )
-                })}
-            </ul>
+            </section>
 
-            <div className="Menu__lists">
+            <Categorys 
+                category={query.category} 
+                isActiveCategory={query.isActiveCategory} 
+                setActiveMenu={(name) => setActiveMenu(name)}
+            />
+
+            <section className="Menu__lists">
                 {!isLoading && data && data.products.length > 0 && data.products.map((item, i) => {
-                    return (
-                        <div key={i} className="Menu__lists-item">
-                            <figure>
-                                <img 
-                                    className="Menu__lists-item-img"
-                                    src={`http://139.162.23.206:8080/${item.imgUrl}`} alt={item.name} 
-                                />
-                            </figure>
-                            <div className="Menu__lists-item-info">
-                                <div>
-                                    <h4>{item.name.length > 20 ? `${item.name.slice(0, 20)}...` : item.name }</h4>
-                                    <p>{item.price}</p>
-                                </div>
-                                <button>ADD</button>
-                            </div>
-                        </div>
-                    );
+                    return <MenuItem key={i} item={item} />
                 })}
                 {isLoading && (
                 <div className="Loader-center">
                     <Loader />
                 </div>
                 )}
-
                 {error && <p>Something went wrong!</p>}
-            </div>
-
+            </section>
+            
+            <Modal 
+                isShow={false}
+            >
+                <p>Hello</p>
+            </Modal>
+            
             <BottomOrder onClick={OpenOrderMobileCTX.onToggle} />
         </div>
     )
