@@ -1,11 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { getMenu } from './../../store/actions/menu';
+import { getMenu } from '../../store/actions/menu';
 import './Menu.scss';
 import BottomOrder from '../../components/BottomOrder/BottomOrder';
-import OpenOrderMobileContext from './../../context/open-order-mobile-context';
+import OpenOrderMobileContext from '../../context/open-order-mobile-context';
 import Loader from '../../components/UI/Loader/Loader';
-import Modal from './../../components/UI/Modal/Modal';
+import Modal from '../../components/UI/Modal/Modal';
 import Categorys from '../../components/Categorys/Categorys';
 
 
