@@ -5,29 +5,9 @@ import './Menu.scss';
 import BottomOrder from '../../components/BottomOrder/BottomOrder';
 import OpenOrderMobileContext from '../../context/open-order-mobile-context';
 import Loader from '../../components/UI/Loader/Loader';
-import Modal from '../../components/UI/Modal/Modal';
+import ConfirmOrderModal from '../../components/Menu/Modal/ConfirmOrderModal/ConfirmOrderModal';
 import Categorys from '../../components/Categorys/Categorys';
-
-
-const MenuItem = ({ item }) => {
-    return (
-        <div className="Menu__lists-item">
-            <figure>
-                <img 
-                    className="Menu__lists-item-img"
-                    src={`http://139.162.23.206:8080/${item.imgUrl}`} alt={item.name} 
-                />
-            </figure>
-            <div className="Menu__lists-item-info">
-                <div>
-                    <h4>{item.name.length > 20 ? `${item.name.slice(0, 20)}...` : item.name }</h4>
-                    <p>{item.price}</p>
-                </div>
-                <button>ADD</button>
-            </div>
-        </div>
-    );
-}
+import MenuItem from '../../components/Menu/MenuItem/MenuItem';
 
 const  Menu = ({
     onLoadMenu,
@@ -47,9 +27,13 @@ const  Menu = ({
         page: 0,
         size: 100
     });
+
+    const [selectedMenu, setSelectedMenu] = useState(null);
+    const [isOpenConfirmMenu, setIsOpenConfirmMenu] = useState(false);
  
 
     useEffect( () => {
+
         onLoadMenu({
             page: query.page,
             size: query.size
@@ -68,6 +52,18 @@ const  Menu = ({
         })
     }
 
+    const onSelectMenuHandler = ( item ) => {
+        const { imgUrl, name, price } = item;
+        setIsOpenConfirmMenu(true);
+        setSelectedMenu({ imgUrl, name, price });
+    }
+
+    const onCancelOrderHandler = () => {
+        setIsOpenConfirmMenu(false)
+    }
+
+    const onSubmitOrderHandler = () => {}
+
     return (
         <div className="Menu">
 
@@ -78,16 +74,17 @@ const  Menu = ({
                 />
             </section>
 
+            {/* Category List start  */}
             <Categorys 
                 category={query.category} 
                 isActiveCategory={query.isActiveCategory} 
                 setActiveMenu={(name) => setActiveMenu(name)}
             />
+            {/* Category List end  */}
 
+            {/*  Menu items Start  */}
             <section className="Menu__lists">
-                {!isLoading && data && data.products.length > 0 && data.products.map((item, i) => {
-                    return <MenuItem key={i} item={item} />
-                })}
+                {!isLoading && data && data.products.length > 0 && data.products.map((item, i) => <MenuItem key={i} {...item} onSelected={(obj) => onSelectMenuHandler(obj)} />)}
                 {isLoading && (
                 <div className="Loader-center">
                     <Loader />
@@ -95,16 +92,21 @@ const  Menu = ({
                 )}
                 {error && <p>Something went wrong!</p>}
             </section>
+            {/*  Menu items End  */}
             
-            <Modal 
-                isShow={false}
-            >
-                <p>Hello</p>
-            </Modal>
+
+            {/* Modal Confirm start  */}
+            <ConfirmOrderModal
+                isOpen={isOpenConfirmMenu}
+                onClose={onCancelOrderHandler}
+                onSubmit={onSubmitOrderHandler}
+            />
+            {/* Modal Confirm end  */}
+     
             
             <BottomOrder onClick={OpenOrderMobileCTX.onToggle} />
         </div>
-    )
+    );
 }
 
 const mapStateToProps = state => {
