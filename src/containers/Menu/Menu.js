@@ -84,7 +84,7 @@ const  Menu = ({
 
             {/*  Menu items Start  */}
             <section className="Menu__lists">
-                {!isLoading && data && data.products.length > 0 && data.products.map((item, i) => <MenuItem key={i} {...item} onSelected={(obj) => onSelectMenuHandler(obj)} />)}
+                {!isLoading && data && data.length > 0 && data.map((item, i) => <MenuItem key={i} {...item} onSelected={(obj) => onSelectMenuHandler(obj)} />)}
                 {isLoading && (
                 <div className="Loader-center">
                     <Loader />

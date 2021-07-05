@@ -11,7 +11,7 @@ export const getMenu = query => {
         dispatch( getLoadStart() );
         fetchMenu(query)
         .then(res => {
-            dispatch({ type: LOAD_MENU_SUCCESS, payload: res.data.data })
+            dispatch({ type: LOAD_MENU_SUCCESS, payload: res.data.results })
         })
         .catch(err => {
             console.log(err);
