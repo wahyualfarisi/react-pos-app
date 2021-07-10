@@ -1,6 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
+
+//action
 import { getMenu } from '../../store/actions/menu';
+import { addToOrder } from './../../store/actions/orders';
+
 import './Menu.scss';
 import BottomOrder from '../../components/BottomOrder/BottomOrder';
 import OpenOrderMobileContext from '../../context/open-order-mobile-context';
@@ -9,11 +13,15 @@ import ConfirmOrderModal from '../../components/Menu/Modal/ConfirmOrderModal/Con
 import Categorys from '../../components/Categorys/Categorys';
 import MenuItem from '../../components/Menu/MenuItem/MenuItem';
 
+
 const  Menu = ({
     onLoadMenu,
     isLoading,
     error,
-    data
+    data,
+
+    //orders
+    onAddOrder
 }) => {
 
     const [query, setQuery] = useState({
@@ -28,6 +36,8 @@ const  Menu = ({
         size: 100
     });
 
+    
+
     const [selectedMenu, setSelectedMenu] = useState(null);
     const [isOpenConfirmMenu, setIsOpenConfirmMenu] = useState(false);
  
@@ -35,8 +45,7 @@ const  Menu = ({
     useEffect( () => {
 
         onLoadMenu({
-            page: query.page,
-            size: query.size
+            isActiveCategory: query.isActiveCategory
         });
 
     }, [ query, onLoadMenu ])
@@ -53,16 +62,19 @@ const  Menu = ({
     }
 
     const onSelectMenuHandler = ( item ) => {
-        const { imgUrl, name, price } = item;
         setIsOpenConfirmMenu(true);
-        setSelectedMenu({ imgUrl, name, price });
+        setSelectedMenu(item);
     }
 
     const onCancelOrderHandler = () => {
         setIsOpenConfirmMenu(false)
     }
 
-    const onSubmitOrderHandler = () => {}
+    const onSubmitOrderHandler = (items) => {
+        onAddOrder(items)
+        setSelectedMenu(null);
+        setIsOpenConfirmMenu(false);
+    }
 
     return (
         <div className="Menu">
@@ -96,11 +108,14 @@ const  Menu = ({
             
 
             {/* Modal Confirm start  */}
-            <ConfirmOrderModal
-                isOpen={isOpenConfirmMenu}
-                onClose={onCancelOrderHandler}
-                onSubmit={onSubmitOrderHandler}
-            />
+            {selectedMenu && (
+                <ConfirmOrderModal
+                    isOpen={isOpenConfirmMenu}
+                    selectedMenu={selectedMenu}
+                    onClose={onCancelOrderHandler}
+                    onSubmit={onSubmitOrderHandler}
+                />
+            )}
             {/* Modal Confirm end  */}
      
             
@@ -120,7 +135,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onLoadMenu: ( query ) => dispatch( getMenu(query)  )
+        onLoadMenu: ( query ) => dispatch( getMenu(query)  ),
+        onAddOrder: (items) => dispatch( addToOrder(items) )
     }
 }
 

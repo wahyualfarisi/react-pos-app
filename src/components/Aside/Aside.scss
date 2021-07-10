@@ -66,15 +66,22 @@
   }
 
   &__Menu {
-    h3 {
-      font-size: 1rem;
-      color: #585858;
-      font-weight: 500;
 
-      @media only screen and (max-width: $bp-largest) {
-        font-size: 0.5rem;
+    &_title {
+      display: flex;
+      align-items: center;
+      & >  h3 {
+        margin-left: .7rem;
+        font-size: 1rem;
+        color: #585858;
+        font-weight: 500;
+  
+        @media only screen and (max-width: $bp-largest) {
+          font-size: 0.5rem;
+        }
       }
     }
+   
     p {
       font-size: 0.8rem;
       color: #848484;

@@ -21,8 +21,8 @@ const Modal = ({
                     {children}
                 </div>
                 <div className="modal-footer">
-                    <button onClick={onClose} className="modal-button">Close</button>
-                    <button onClick={onSubmit} className="modal-button">Submit</button>
+                    <button onClick={onClose} className="modal-button modal-button-close mr-small">Close</button>
+                    <button onClick={onSubmit} className="modal-button modal-button-submit">Submit</button>
                 </div>
             </div>
         </div>

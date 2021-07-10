@@ -10,6 +10,7 @@
   --color-grey-dark-4: #888585;
 
   --color-text-grey: #7a8a87;
+  --color-danger: #D54C4C;
 
   --font-display: "Poppins", sans-serif;
 }
@@ -53,10 +54,30 @@ body {
   margin-top: 3.5rem;
 }
 
+.mr-small {
+  margin-right: 1rem;
+}
+.mr-medium {
+  margin-right: 2rem;
+}
+.mr-large {
+  margin-right: 3rem;
+}
+.mr-huge {
+  margin-right: 3.5rem;
+}
+
 .Loader {
   &-center {
     display: flex;
     justify-content: center;
     align-items: center;
   }
+}
+
+//Icon
+.Icon {
+  font-size: .7rem;
+  color: var(--color-danger);
+  cursor: pointer;
 }

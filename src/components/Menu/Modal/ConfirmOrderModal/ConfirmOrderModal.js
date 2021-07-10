@@ -1,39 +1,75 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Modal from '../../../UI/Modal/Modal';
 import './ConfirmOrderModal.scss';
+
+//hooks
+import useQuantityCounter from '../../../../hooks/useQuantityCounter';
 
 const ConfirmOrderModal = ({
     isOpen,
     onClose,
-    onSubmit
+    onSubmit,
+    selectedMenu
 }) => {
+    const { photo, menu_name, price } = selectedMenu;
+
+    const [qty, changeQtyHandler] = useQuantityCounter(1);
+    const [notes, setNotes] = useState('');
+    
+    const submitHandler = () => {
+        const data = {
+            photo,
+            menu_name,
+            price,
+            qty,
+            notes
+        };
+
+        onSubmit(data);
+    }
+
     return (
         <Modal
             isShow={isOpen}
             onClose={onClose}
             title="Confirm Order"
+            onSubmit={submitHandler}
         >
             <div className="ConfirmOrder">
-                <img 
-                    alt="confirmorder"
-                    src={`https://images.unsplash.com/photo-1504674900247-0877df9cc836?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8Zm9vZHxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60`} 
-                />
+
+                <div className="ConfirmOrder__info">
+                    <img 
+                        alt="confirmorder"
+                        src={photo} 
+                    />
+                </div>
                 <div className="ConfirmOrder__details">
+                    <h6>Details Checkout</h6>
                     <div className="ConfirmOrder__details_title">
-                        <h1>Burger Lezat</h1>
-                        <h3>120.000</h3>
+                        <h1>{menu_name}</h1>
+                        <h3>Total: Rp. {price * qty}</h3>
                     </div>
                     
                     <div className="ConfirmOrder__details__control">
-                        <button>-</button>
-                        <span>100</span>
-                        <button>+</button>
+                        <button 
+                            onClick={() => changeQtyHandler('-')} 
+                            disabled={qty === 1}
+                            >-
+                        </button>
+                        <span>{qty}</span>
+                        <button 
+                            onClick={() => changeQtyHandler('+')}
+                            >+
+                        </button>
                     </div>
 
                     <textarea 
                         rows="8"
-                        placeholder="Tambahkan catatan disini ..."
+                        onChange={(e) => setNotes(e.target.value)}
+                        placeholder="Add Notes in here ..."
+                        value={notes}
                         >
+                        
                     </textarea>
                 </div>
             </div>
