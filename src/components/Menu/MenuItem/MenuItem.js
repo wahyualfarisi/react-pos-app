@@ -2,13 +2,20 @@ import React from 'react'
 
 const MenuItem = ({ photo, menu_name, price, onSelected }) => {
     
+    let image = <div className="imagePlaceholder"></div> 
+    if(photo){
+        image = (
+            <img
+                className="Menu__lists-item-img"
+                src={photo} alt={menu_name} 
+            />
+        );
+    }
+
     return (
         <div className="Menu__lists-item">
             <figure>
-                <img
-                    className="Menu__lists-item-img"
-                    src={photo} alt={menu_name} 
-                />
+                {image}
             </figure>
             <div className="Menu__lists-item-info">
                 <div>

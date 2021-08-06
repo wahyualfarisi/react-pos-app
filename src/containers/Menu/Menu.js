@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 
 //action
-import { getMenu } from '../../store/actions/menu';
+import { getMenu, clearMenu } from '../../store/actions/menu';
 import { addToOrder } from './../../store/actions/orders';
 
 import './Menu.scss';
@@ -19,9 +19,10 @@ const  Menu = ({
     isLoading,
     error,
     data,
-
+    datapage,
     //orders
-    onAddOrder
+    onAddOrder,
+    onClearMenu
 }) => {
 
     const [query, setQuery] = useState({
@@ -32,36 +33,36 @@ const  Menu = ({
         ],
         isActiveCategory: 'All',
         searchText: null,
-        page: 0,
-        size: 100
+        page: 1
     });
-
-    
-
+  
     const [selectedMenu, setSelectedMenu] = useState(null);
     const [isOpenConfirmMenu, setIsOpenConfirmMenu] = useState(false);
- 
+    const OpenOrderMobileCTX = useContext(OpenOrderMobileContext);
 
     useEffect( () => {
-
+        
         onLoadMenu({
-            isActiveCategory: query.isActiveCategory
+            isActiveCategory: query.isActiveCategory,
+            page: query.page
         });
 
     }, [ query, onLoadMenu ])
 
-    const OpenOrderMobileCTX = useContext(OpenOrderMobileContext);
-
     const setActiveMenu = (menuName) => {
+        onClearMenu()
         setQuery(prevState => {
             return {
                 ...prevState,
-                isActiveCategory: menuName
+                isActiveCategory: menuName,
+                page: 1
             }
-        })
+        });
+        
     }
 
     const onSelectMenuHandler = ( item ) => {
+        
         setIsOpenConfirmMenu(true);
         setSelectedMenu(item);
     }
@@ -74,6 +75,15 @@ const  Menu = ({
         onAddOrder(items)
         setSelectedMenu(null);
         setIsOpenConfirmMenu(false);
+    }
+
+    const onLoadMore = () => {
+        setQuery(prevState => {
+            return {
+                ...prevState,
+                page: prevState.page + 1
+            }
+        })
     }
 
     return (
@@ -96,7 +106,10 @@ const  Menu = ({
 
             {/*  Menu items Start  */}
             <section className="Menu__lists">
-                {!isLoading && data && data.length > 0 && data.map((item, i) => <MenuItem key={i} {...item} onSelected={(obj) => onSelectMenuHandler(obj)} />)}
+                {data 
+                    && data.length > 0 
+                    && data.map((item, i) => <MenuItem key={i} {...item} onSelected={(obj) => onSelectMenuHandler(obj)} />)}
+               
                 {isLoading && (
                 <div className="Loader-center">
                     <Loader />
@@ -106,6 +119,7 @@ const  Menu = ({
             </section>
             {/*  Menu items End  */}
             
+            {!isLoading && datapage && datapage.last_page > query.page && <button onClick={onLoadMore}> Load More </button> } 
 
             {/* Modal Confirm start  */}
             {selectedMenu && (
@@ -129,14 +143,16 @@ const mapStateToProps = state => {
         //Menu
         isLoading: state.menu.isLoading,
         data: state.menu.data,
-        error: state.menu.error
+        error: state.menu.error,
+        datapage: state.menu.page
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
         onLoadMenu: ( query ) => dispatch( getMenu(query)  ),
-        onAddOrder: (items) => dispatch( addToOrder(items) )
+        onAddOrder: (items) => dispatch( addToOrder(items) ),
+        onClearMenu: () => dispatch( clearMenu() )
     }
 }
 
