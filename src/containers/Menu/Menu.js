@@ -136,7 +136,14 @@ const  Menu = ({
             <section className="Menu__lists">
                 {data 
                     && data.length > 0 
-                    && data.map((item, i) => <MenuItem key={i} {...item} onSelected={(obj) => onSelectMenuHandler(obj)} />)}
+                    && data.map((item, i) => 
+                    <MenuItem 
+                    key={i} {...item} 
+                    onSelected={(obj) => 
+                        onSelectMenuHandler(obj)} 
+                    />
+                    )
+                }
                
                 {isLoading && (
                 <div className="Loader-center">

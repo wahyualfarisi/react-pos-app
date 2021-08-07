@@ -3,4 +3,7 @@ export const LOAD_MENU_SUCCESS = 'LOAD_MENU_SUCCESS';
 export const LOAD_MENU_FAILED = 'LOAD_MENU_FAILED';
 export const CLEAR_DATA_MENU = 'CLEAR_DATA_MENU';
 
+
+// ORDER
 export const ADD_TO_ORDER = 'ADD_TO_ORDER';
+export const REMOVE_ORDER_ITEM = 'REMOVE_ORDER_ITEM';
