@@ -7,5 +7,9 @@ export const fetchMenu = ( query ) => {
         url += `&query&category=${query.isActiveCategory}`;
     }
 
+    if(query.searchText){
+        url += `&search=${query.searchText}`
+    }
+
     return Axios.get(url, query);
 }

@@ -3,6 +3,23 @@
 .Menu {
   padding: 1rem;
 
+  &__action {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: center;
+  }
+
+  &_btn_loadmore{
+    background-color: var(--color-primary);
+    outline: none;
+    border: none;
+    padding: .7rem 2rem .7rem 2rem;
+    color: #fff;
+    font-weight: 700;
+    border-radius: 1rem;
+    cursor: pointer;
+  }
+
   &__heading {
     display: grid;
     grid-template-columns: max-content 1fr;
@@ -69,6 +86,15 @@
         background-color: var(--color-primary);
         color: #fff;
       }
+    }
+  }
+
+  &__results_search {
+    & > h2 {
+      color: var(--color-text-grey);
+    }
+    & > h3 {
+      color: var(--color-text-grey);
     }
   }
 

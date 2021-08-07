@@ -1,5 +1,6 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState, useMemo } from 'react';
 import { connect } from 'react-redux';
+import debounce from 'lodash.debounce';
 
 //action
 import { getMenu, clearMenu } from '../../store/actions/menu';
@@ -40,14 +41,35 @@ const  Menu = ({
     const [isOpenConfirmMenu, setIsOpenConfirmMenu] = useState(false);
     const OpenOrderMobileCTX = useContext(OpenOrderMobileContext);
 
+    const changeHandler = event => {
+        onClearMenu();
+        setQuery(prevState => {
+            return {
+                ...prevState,
+                searchText: event.target.value,
+                page: 1,
+                isActiveCategory: 'All'
+            }
+        })
+    }
+
+    const debounceChangeHandler = useMemo(() => {
+        return debounce(changeHandler, 400)
+    }, [  ])
+
     useEffect( () => {
         
         onLoadMenu({
             isActiveCategory: query.isActiveCategory,
-            page: query.page
+            page: query.page,
+            searchText: query.searchText
         });
 
-    }, [ query, onLoadMenu ])
+        return () => {
+            debounceChangeHandler.cancel()
+        }
+
+    }, [ query, onLoadMenu, debounceChangeHandler ])
 
     const setActiveMenu = (menuName) => {
         onClearMenu()
@@ -62,7 +84,6 @@ const  Menu = ({
     }
 
     const onSelectMenuHandler = ( item ) => {
-        
         setIsOpenConfirmMenu(true);
         setSelectedMenu(item);
     }
@@ -86,6 +107,10 @@ const  Menu = ({
         })
     }
 
+   
+
+   
+
     return (
         <div className="Menu">
 
@@ -93,6 +118,7 @@ const  Menu = ({
                 <h1>Menu</h1>
                 <input 
                     placeholder="Search Makanan, Minuman, dll"
+                    onChange={debounceChangeHandler}
                 />
             </section>
 
@@ -101,6 +127,8 @@ const  Menu = ({
                 category={query.category} 
                 isActiveCategory={query.isActiveCategory} 
                 setActiveMenu={(name) => setActiveMenu(name)}
+                searchText={query.searchText}  
+                datapage={datapage}              
             />
             {/* Category List end  */}
 
@@ -119,8 +147,9 @@ const  Menu = ({
             </section>
             {/*  Menu items End  */}
             
-            {!isLoading && datapage && datapage.last_page > query.page && <button onClick={onLoadMore}> Load More </button> } 
-
+            <div className="Menu__action">
+                {!isLoading && datapage && datapage.last_page > query.page && <button className="Menu_btn_loadmore" onClick={onLoadMore}> Load More </button> } 
+            </div>
             {/* Modal Confirm start  */}
             {selectedMenu && (
                 <ConfirmOrderModal
