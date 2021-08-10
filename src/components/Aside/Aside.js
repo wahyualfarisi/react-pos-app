@@ -67,7 +67,7 @@ function Aside({
     const subTotalArr = order_data.map(item => item.price * item.qty);
 
     const total = subTotalArr.reduce((a, b) => a + b , 0);
-
+   
     const selectedItem = (index, type) => {
        
         switch(type)
@@ -110,9 +110,13 @@ function Aside({
             form_data.append(`qty[${i}]`, item.qty);
             form_data.append(`notes[${i}]`, item.notes)
         })
+        
+        onCreateTransaction(form_data, res => {
 
-        alert('ok')
-        // onCreateTransaction(form_data);
+            if(res.status) {
+                toggleModalHandler();
+            }
+        });
     }
 
     const toggleModalHandler = () => {
@@ -281,7 +285,7 @@ const mapDispatchToProps = dispatch => {
         onShowInput: (i) => dispatch( showInputItem(i) ),
         onChangeInput: (i, value) => dispatch( changeInput(i, value) ),
         onChangeQty: (i, type_of) => dispatch( changeQtyItem(i, type_of) ),
-        onCreateTransaction: (form_data) => dispatch( createTransaction(form_data) )
+        onCreateTransaction: (form_data, cb) => dispatch( createTransaction(form_data, cb) )
     }
 }
 

@@ -1,5 +1,5 @@
 import {
-    ADD_TO_ORDER, CHANGE_INPUT_ITEM, CHANGE_QTY_ITEM, REMOVE_NOTE_ITEM, REMOVE_ORDER_ITEM, SHOW_INPUT_ITEM
+    ADD_TO_ORDER, CHANGE_INPUT_ITEM, CHANGE_QTY_ITEM, CREATE_TRX_FAILED, CREATE_TRX_START, CREATE_TRX_SUCCESS, REMOVE_NOTE_ITEM, REMOVE_ORDER_ITEM, SHOW_INPUT_ITEM
 } from './../actions/action';
 
 
@@ -80,7 +80,28 @@ const orders = (state = inititalState, action) => {
                 ...state,
                 data: copyAllData
             }
+
+        case CREATE_TRX_START:
+            return {
+                ...state,
+                isLoadingSubmited: true,
+                errorSubmited: null
+            }
         
+        case CREATE_TRX_SUCCESS:
+            return {
+                ...state,
+                isLoadingSubmited: false,
+                data: [],
+                errorSubmited: null
+            }
+
+        case CREATE_TRX_FAILED:
+            return {
+                ...state,
+                isLoadingSubmited: false,
+                errorSubmited: action.error
+            }
         default:
             return state;
     }

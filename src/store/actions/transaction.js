@@ -7,17 +7,25 @@ import {
     create
 } from './../../api/transaction';
 
-export const createTransaction = (data) => {
+export const createTransaction = (data, callback) => {
     return dispatch => {
         dispatch({
             type: CREATE_TRX_START
         })
         create(data)
             .then(res => {
+                callback({
+                    status: res.data.status
+                })
                 console.log(res);
+                dispatch({
+                    type: CREATE_TRX_SUCCESS
+                })
             })
             .catch(err => {
-                console.log(err);
+                dispatch({
+                    type: CREATE_TRX_FAILED
+                })
             })
     }
 }
