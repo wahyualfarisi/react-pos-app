@@ -11,7 +11,8 @@ const ConfirmOrderModal = ({
     onSubmit,
     selectedMenu
 }) => {
-    const { photo, menu_name, price } = selectedMenu;
+  
+    const { photo, menu_name, price, id } = selectedMenu;
     const [qty, changeQtyHandler] = useQuantityCounter(1);
     const [notes, setNotes] = useState('');
     
@@ -22,6 +23,7 @@ const ConfirmOrderModal = ({
             price,
             qty,
             notes,
+            id,
             showInput: false
         };
 

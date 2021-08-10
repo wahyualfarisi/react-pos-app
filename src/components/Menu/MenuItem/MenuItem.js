@@ -1,6 +1,6 @@
 import React from 'react'
 
-const MenuItem = ({ photo, menu_name, price, onSelected }) => {
+const MenuItem = ({ photo, menu_name, price, onSelected, id }) => {
     
     let image = <div className="imagePlaceholder"></div> 
     if(photo){
@@ -22,7 +22,7 @@ const MenuItem = ({ photo, menu_name, price, onSelected }) => {
                     <h4>{menu_name.length > 20 ? `${menu_name.slice(0, 20)}...` : menu_name }</h4>
                     <p>{price}</p>
                 </div>
-                <button onClick={() => onSelected({ photo, menu_name, price })}>ADD</button>
+                <button onClick={() => onSelected({ photo, menu_name, price, id })}>ADD</button>
             </div>
         </div>
     )

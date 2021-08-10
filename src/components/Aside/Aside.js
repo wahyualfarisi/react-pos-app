@@ -1,24 +1,66 @@
-import React, { useContext} from 'react';
+import React, { useContext, useState } from 'react';
 
 import './Aside.scss';
 import { FiEdit, FiTrash, FiCheck  } from 'react-icons/fi';
 import OpenOrderMobileContext from './../../context/open-order-mobile-context';
+import ModalCheckout from './Modal/CheckoutOrder';
 import { connect } from 'react-redux';
 import { 
         removeItemOrder, 
         removeNoteItem, 
         showInputItem,
-        changeInput
+        changeInput,
+        changeQtyItem
 } from './../../store/actions/orders'
+import {
+    createTransaction
+} from './../../store/actions/transaction';
 
 function Aside({
     order_data,
 
+    //Order
     onRemoveItem,
     onRemoveNote,
     onShowInput,
-    onChangeInput
+    onChangeInput,
+    onChangeQty,
+
+    //Transaction
+    onCreateTransaction
 }) {
+
+    const [ form_checkout, setFormCheckout ] = useState({
+        email: {
+            value: '',
+            isValid: false,
+            required: true,
+            type: 'email',
+            placeholder: 'Enter an email',
+            label: 'Email',
+            pattern: /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+        },
+        phone_number: {
+            value: '',
+            isValid: false,
+            required: true,
+            type: 'text',
+            placeholder: 'Enter a phone number',
+            label: 'Phone number',
+            pattern: /^(^\+62|62|^08)(\d{3,4}-?){2}\d{3,4}$/,
+            error: ''
+        },
+        name: {
+            value: '',
+            isValid: false,
+            required: true,
+            type: 'text',
+            placeholder: 'Enter an name',
+            label: 'Name',
+            error: ''
+        }
+    });
+    const [isOpenModal, setIsOpenModal] = useState(false);
 
     const OrderMenuMobileCtx = useContext(OpenOrderMobileContext);
 
@@ -42,6 +84,11 @@ function Aside({
                 onShowInput(index)
             return;
 
+            case 'increase':
+                case 'decrease':
+                onChangeQty(index, type);
+            return;
+
             default:
                 return false;
         }
@@ -51,7 +98,56 @@ function Aside({
         onChangeInput(i, value)
     }
 
+    const submitCheckoutHandler = () => {
+        const { email, phone_number, name } = form_checkout
+        const form_data = new FormData();
+        form_data.append('email', email.value);
+        form_data.append('phone_number', phone_number.value);
+        form_data.append('name', name.value);
 
+        order_data.forEach((item, i) => {
+            form_data.append(`menu_id[${i}]`, item.id);
+            form_data.append(`qty[${i}]`, item.qty);
+            form_data.append(`notes[${i}]`, item.notes)
+        })
+
+        alert('ok')
+        // onCreateTransaction(form_data);
+    }
+
+    const toggleModalHandler = () => {
+        setIsOpenModal(prevState => !prevState);
+    }
+
+    const changeFormCheckoutHandler = (e) => {
+        const form = { ...form_checkout };
+        const getField = form[e.target.name];
+        getField.value = e.target.value;
+      
+
+        if(getField.value === '' && getField.required){
+            getField.error = 'Field is Required'
+            getField.isValid = false;
+        }else{
+            getField.error = ''
+            getField.isValid = true;
+        }
+    
+        if(getField.pattern){
+            if(getField.pattern.test(getField.value)){
+                getField.error = ''
+                getField.isValid = true;
+            }else{
+                getField.error = `${getField.label} is not valid`
+                getField.isValid = false;
+            }
+        }
+
+        setFormCheckout(prevState => ({
+            ...prevState,
+            [e.target.name]: getField
+        }))
+    }
 
     return (
         <div className={OrderMenuMobileCtx.isOpen ? 'Aside Aside__open' : 'Aside'}>
@@ -126,9 +222,16 @@ function Aside({
                                 )}
                             </div>
                             <div className="Order__Action">
-                                <button>-</button>
+                                <button 
+                                    onClick={() => selectedItem(i, 'decrease')}
+                                    disabled={item.qty === 1}
+                                    >-
+                                </button>
                                 <span>{item.qty}</span>
-                                <button>+</button>
+                                <button 
+                                    onClick={() => selectedItem(i, 'increase')}
+                                    >+
+                                </button>
                             </div>
                         </div>
                         )
@@ -140,10 +243,27 @@ function Aside({
                         <h1>Rp. {total}</h1>
                         <p>{order_data.length} Items</p>
                     </div>
-                    <button className="Order__btncancel">CANCEL</button>
-                    <button className="Order__gopay">ORDER NOW</button>
+                    <button 
+                        className="Order__btncancel"
+                        disabled={order_data.length === 0}
+                    >CANCEL</button>
+                    <button 
+                        className="Order__gopay"
+                        disabled={order_data.length === 0}
+                        onClick={toggleModalHandler}
+                        >ORDER NOW
+                    </button>
                 </div>
             </div>
+
+
+            <ModalCheckout 
+                isOpen={isOpenModal}
+                onSubmit={submitCheckoutHandler}
+                onClose={toggleModalHandler}
+                formData={form_checkout}
+                changeHandler={changeFormCheckoutHandler}
+            />
         </div>
     )
 }
@@ -159,7 +279,9 @@ const mapDispatchToProps = dispatch => {
         onRemoveItem: (i) => dispatch( removeItemOrder(i) ),
         onRemoveNote: (i) => dispatch( removeNoteItem(i) ),
         onShowInput: (i) => dispatch( showInputItem(i) ),
-        onChangeInput: (i, value) => dispatch( changeInput(i, value) )
+        onChangeInput: (i, value) => dispatch( changeInput(i, value) ),
+        onChangeQty: (i, type_of) => dispatch( changeQtyItem(i, type_of) ),
+        onCreateTransaction: (form_data) => dispatch( createTransaction(form_data) )
     }
 }
 

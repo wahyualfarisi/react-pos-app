@@ -138,7 +138,8 @@ const  Menu = ({
                     && data.length > 0 
                     && data.map((item, i) => 
                     <MenuItem 
-                    key={i} {...item} 
+                    key={i} 
+                    {...item} 
                     onSelected={(obj) => 
                         onSelectMenuHandler(obj)} 
                     />

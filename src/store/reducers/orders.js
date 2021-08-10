@@ -1,5 +1,5 @@
 import {
-    ADD_TO_ORDER, CHANGE_INPUT_ITEM, REMOVE_NOTE_ITEM, REMOVE_ORDER_ITEM, SHOW_INPUT_ITEM
+    ADD_TO_ORDER, CHANGE_INPUT_ITEM, CHANGE_QTY_ITEM, REMOVE_NOTE_ITEM, REMOVE_ORDER_ITEM, SHOW_INPUT_ITEM
 } from './../actions/action';
 
 
@@ -12,13 +12,26 @@ const inititalState = {
 const orders = (state = inititalState, action) => {
     let getItem = null;
     let copyAllData = null;
+    let findIndex = null;
 
     switch(action.type){
 
         case ADD_TO_ORDER:
+            copyAllData = [ ...state.data ];
+            findIndex = copyAllData.findIndex(item => item.id === action.payload.id);
+
+            if(findIndex !== -1) {
+                getItem = copyAllData[findIndex];
+                getItem['qty'] = getItem['qty'] + action.payload.qty;
+                getItem['notes'] = action.payload.notes;
+                copyAllData[findIndex] = getItem;
+            }else {
+                copyAllData = [ ...state.data , action.payload ];
+            }
+
             return {
                 ...state,
-                data: [ ...state.data, action.payload ]
+                data: copyAllData
             }
 
         case REMOVE_ORDER_ITEM:
@@ -58,6 +71,16 @@ const orders = (state = inititalState, action) => {
                 data: copyAllData
             }
 
+        case CHANGE_QTY_ITEM:
+            copyAllData = [ ...state.data ];
+            getItem = copyAllData[action.index];
+            getItem['qty'] = action.type_of === 'increase' ? getItem.qty += 1 : getItem.qty -= 1;
+            copyAllData[action.index] = getItem
+            return {
+                ...state,
+                data: copyAllData
+            }
+        
         default:
             return state;
     }

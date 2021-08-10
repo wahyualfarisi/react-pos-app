@@ -6,11 +6,10 @@ const Modal = ({
     onClose,
     onSubmit,
     title,
-    children
+    children,
+    isDisabledSubmit = false
 }) => {
-
     
-
     return ReactDOM.createPortal(
         <div className={`modal ${isShow && 'show'}`} onClick={onClose}>
             <div className="modal-content" onClick={e => e.stopPropagation()}>
@@ -21,8 +20,16 @@ const Modal = ({
                     {children}
                 </div>
                 <div className="modal-footer">
-                    <button onClick={onClose} className="modal-button modal-button-close mr-small">Close</button>
-                    <button onClick={onSubmit} className="modal-button modal-button-submit">Submit</button>
+                    <button 
+                        onClick={onClose} 
+                        className="modal-button modal-button-close mr-small"
+                    >Close</button>
+                    <button 
+                        onClick={onSubmit} 
+                        className="modal-button modal-button-submit"
+                        disabled={isDisabledSubmit}
+                        >Submit
+                    </button>
                 </div>
             </div>
         </div>
