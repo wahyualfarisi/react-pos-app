@@ -1,10 +1,29 @@
-import React from 'react';
+import React,  { useEffect, useState } from 'react';
 import './Nav.scss';
 import { NavLink } from 'react-router-dom';
 import data from './NavData';
 import { FiArrowRightCircle } from 'react-icons/fi';
+import { connect } from 'react-redux';
+import {
+    getTransaction
+} from './../../store/actions/transaction';
 
-function Nav() {
+function Nav({
+    transaction,
+    isLoading,
+    error,
+    onLoadTransaction
+}) {
+
+    const [query] = useState({
+        page: 1
+    })
+
+    useEffect( () => {
+        onLoadTransaction(query)
+    }, [ query, onLoadTransaction ])
+
+
     return (
         <div className="Nav">
             <div className="Navigation">
@@ -15,13 +34,19 @@ function Nav() {
                 </div>
                 )}
                 <ul className="Navigation__items">
-                    {data.map( (item, i) => {
+                    {!isLoading && transaction && transaction.map( (item, i) => {
+
+                        let total = 0;
+                        item.get_items.forEach(k => {
+                            total += k.qty * k.get_menu.price;
+                        })
+
                         return (
                             <li key={i} className="Navigation__items_item">
-                                <NavLink to="/" className="Navigation__items_item_link active">
-                                    <h3>{item.data}</h3>
-                                    <h4>{item.invoiceNumber}</h4>
-                                    <p>{item.total}</p>
+                                <NavLink to={`/${item.sc_key}`} className="Navigation__items_item_link active">
+                                    <h3>{item.created_at}</h3>
+                                    <h4>{item.no_trx}</h4>
+                                    <p>{total}</p>
                                     <button>
                                         Lihat Detail
                                         <FiArrowRightCircle className="btn_icon" />
@@ -38,4 +63,18 @@ function Nav() {
     )
 }
 
-export default Nav
+const mapStateToProps = state => {
+    return {
+        transaction: state.transaction.data,
+        isLoading: state.transaction.isLoading,
+        error: state.transaction.error
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        onLoadTransaction: (query) => dispatch( getTransaction(query) ) 
+    }
+}
+
+export default connect(mapStateToProps , mapDispatchToProps) (Nav)

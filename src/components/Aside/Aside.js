@@ -10,7 +10,8 @@ import {
         removeNoteItem, 
         showInputItem,
         changeInput,
-        changeQtyItem
+        changeQtyItem,
+        clearItem
 } from './../../store/actions/orders'
 import {
     createTransaction
@@ -25,6 +26,7 @@ function Aside({
     onShowInput,
     onChangeInput,
     onChangeQty,
+    onClearItem,
 
     //Transaction
     onCreateTransaction
@@ -99,6 +101,7 @@ function Aside({
     }
 
     const submitCheckoutHandler = () => {
+       
         const { email, phone_number, name } = form_checkout
         const form_data = new FormData();
         form_data.append('email', email.value);
@@ -115,6 +118,7 @@ function Aside({
 
             if(res.status) {
                 toggleModalHandler();
+                clearForm()
             }
         });
     }
@@ -151,6 +155,28 @@ function Aside({
             ...prevState,
             [e.target.name]: getField
         }))
+    }
+
+    const clearForm = () => {
+        setFormCheckout(prevState => ({
+            ...prevState,
+            email: {
+                ...prevState.email,
+                isValid: false,
+                value: ''
+            },
+            phone_number: {
+                ...prevState.phone_number,
+                isValid: false,
+                value: ''
+            },
+            name: {
+                ...prevState.name,
+                isValid: false,
+                value: ''
+            }
+        }))
+
     }
 
     return (
@@ -250,6 +276,7 @@ function Aside({
                     <button 
                         className="Order__btncancel"
                         disabled={order_data.length === 0}
+                        onClick={onClearItem}
                     >CANCEL</button>
                     <button 
                         className="Order__gopay"
@@ -285,7 +312,8 @@ const mapDispatchToProps = dispatch => {
         onShowInput: (i) => dispatch( showInputItem(i) ),
         onChangeInput: (i, value) => dispatch( changeInput(i, value) ),
         onChangeQty: (i, type_of) => dispatch( changeQtyItem(i, type_of) ),
-        onCreateTransaction: (form_data, cb) => dispatch( createTransaction(form_data, cb) )
+        onCreateTransaction: (form_data, cb) => dispatch( createTransaction(form_data, cb) ),
+        onClearItem: () => dispatch( clearItem() )
     }
 }
 
