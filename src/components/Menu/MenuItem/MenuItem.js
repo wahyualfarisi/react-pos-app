@@ -16,13 +16,16 @@ const MenuItem = ({ photo, menu_name, price, onSelected, id }) => {
         <div className="Menu__lists-item">
             <figure>
                 {image}
+                <button
+                    className="Menu__lists-item-btnAdd" 
+                    onClick={() => onSelected({ photo, menu_name, price, id })}>ADD
+                </button>
             </figure>
             <div className="Menu__lists-item-info">
                 <div>
                     <h4>{menu_name.length > 20 ? `${menu_name.slice(0, 20)}...` : menu_name }</h4>
                     <p>{price}</p>
                 </div>
-                <button onClick={() => onSelected({ photo, menu_name, price, id })}>ADD</button>
             </div>
         </div>
     )

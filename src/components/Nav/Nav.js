@@ -48,7 +48,7 @@ function Nav({
                                     <h4>{item.no_trx}</h4>
                                     <p>{total}</p>
                                     <button>
-                                        Lihat Detail
+                                        Detail
                                         <FiArrowRightCircle className="btn_icon" />
                                     </button>
                                 </NavLink>
