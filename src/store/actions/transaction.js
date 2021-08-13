@@ -4,11 +4,15 @@ import {
     CREATE_TRX_FAILED,
     LOAD_TRX_START,
     LOAD_TRX_SUCCESS,
-    LOAD_TRX_FAILED
+    LOAD_TRX_FAILED,
+    DETAIL_TRX_START,
+    DETAIL_TRX_SUCCESS,
+    DETAIL_TRX_FAILED
 } from './action.js';
 import {
     create,
-    fetchTransaction
+    fetchTransaction,
+    detailTransaction
 } from './../../api/transaction';
 
 export const createTransaction = (data, callback) => {
@@ -53,5 +57,27 @@ export const getTransaction = ( query ) => {
                     error: err.message
                 })
             })
+    }
+}
+
+export const getDetail = (id) => {
+    return dispatch => {
+        dispatch({
+            type: DETAIL_TRX_START
+        })
+        detailTransaction(id)
+        .then(res => {
+            console.log(res);
+            dispatch({
+                type: DETAIL_TRX_SUCCESS
+            })
+        })
+        .catch(err => {
+            console.log(err);
+            dispatch({
+                type: DETAIL_TRX_FAILED,
+                error: err.message
+            })
+        })
     }
 }

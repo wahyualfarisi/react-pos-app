@@ -27,7 +27,7 @@ function Nav({
     return (
         <div className="Nav">
             <div className="Navigation">
-                <h1 className="Navigation__heading mb-medium">Transaction History</h1>
+                <h1 className="Navigation__heading mb-medium">History</h1>
                 {data.length === 0 && (
                 <div className="EmptyTransaction">
                     <h3>You have not made any transaction yet</h3>
@@ -43,7 +43,7 @@ function Nav({
 
                         return (
                             <li key={i} className="Navigation__items_item">
-                                <NavLink to={`/${item.sc_key}`} className="Navigation__items_item_link active">
+                                <NavLink to={`/transaction/${item.sc_key}`} className="Navigation__items_item_link active">
                                     <h3>{item.created_at}</h3>
                                     <h4>{item.no_trx}</h4>
                                     <p>{total}</p>

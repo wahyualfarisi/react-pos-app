@@ -15,7 +15,7 @@ import Categorys from '../../components/Categorys/Categorys';
 import MenuItem from '../../components/Menu/MenuItem/MenuItem';
 
 
-const  Menu = ({
+const Menu = ({
     onLoadMenu,
     isLoading,
     error,

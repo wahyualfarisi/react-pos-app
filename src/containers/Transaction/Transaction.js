@@ -3,7 +3,7 @@ import React from 'react'
 function Transaction() {
     return (
         <div>
-            <h1>Detail Transaction</h1>
+            <h1>List Transaction</h1>
         </div>
     )
 }

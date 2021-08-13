@@ -8,3 +8,7 @@ export const fetchTransaction = (query) => {
     let url = '/pos/trx';
     return Axios.get(url, query);
 }
+
+export const detailTransaction = (id) => {
+    return Axios.get(`/pos/trx/${id}`);
+}
