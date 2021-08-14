@@ -25,7 +25,7 @@ function DetailTransaction({
 
             <section className="DetailTrx_Info">
                 <div className="DetailTrx_Info-member">
-                    <h3>INV-002</h3>
+                    <h3>INV-001</h3>
                     <h4>2020-08-12 13:00:34</h4>
                     <h4>Wahyu Alfarisi - Wahyualfarisi30@gmail.com</h4>
                     <h4>081317726873</h4>
