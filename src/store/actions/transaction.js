@@ -27,7 +27,8 @@ export const createTransaction = (data, callback) => {
                     payload: res.data.results
                 })
                 callback({
-                    status: res.data.status
+                    status: res.data.status,
+                    sc_key: res.data.results.sc_key
                 })
                 
             })

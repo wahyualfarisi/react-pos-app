@@ -119,6 +119,7 @@ function Aside({
             if(res.status) {
                 toggleModalHandler();
                 clearForm()
+                window.location.hash = `/transaction/${res.sc_key}`
             }
         });
     }
@@ -185,6 +186,7 @@ function Aside({
                 <div className="Order__heading">
                     <h1>Order List ({order_data.length}) Item</h1>
                     {OrderMenuMobileCtx.isOpen && <button onClick={OrderMenuMobileCtx.onToggle}>Close</button>}
+                    
                 </div>
 
                 <div className="Order__lists">

@@ -56,6 +56,7 @@ const Menu = ({
     const debounceChangeHandler = useMemo(() => {
         return debounce(changeHandler, 400)
     }, [  ])
+    
 
     useEffect( () => {
         
@@ -64,12 +65,14 @@ const Menu = ({
             page: query.page,
             searchText: query.searchText
         });
+        
 
         return () => {
             debounceChangeHandler.cancel()
         }
 
     }, [ query, onLoadMenu, debounceChangeHandler ])
+
 
     const setActiveMenu = (menuName) => {
         onClearMenu()
@@ -80,7 +83,6 @@ const Menu = ({
                 page: 1
             }
         });
-        
     }
 
     const onSelectMenuHandler = ( item ) => {

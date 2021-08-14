@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import './DetailTransaction.scss';
 import { Link , useParams} from 'react-router-dom';
 import { connect } from 'react-redux';
+import { FiArrowRight } from 'react-icons/fi'
 import {
     getDetail
 } from './../../../store/actions/transaction';
@@ -25,6 +26,10 @@ function DetailTransaction({
         <div className="DetailTrx">
             <section className="DetailTrx_heading">
                 <h1>Detail Transaction</h1>
+                <Link to="/">
+                    <span>Back to Menu</span> 
+                    <FiArrowRight />
+                </Link>
             </section>
             {isLoading && <p>Loading...</p>}
 

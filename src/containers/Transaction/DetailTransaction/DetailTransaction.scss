@@ -3,14 +3,29 @@
 
     &_heading {
         margin-bottom: 2rem;
-        h1 {
+
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        & > h1 {
             font-size: 1.2rem;
             color: var(--color-primary);
+        }
+
+        & > a {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: var(--color-primary);
+
+            & > span {
+                margin-right: 1rem;
+            }
         }
     }
 
     &_Info {
-        background-color: #fff;
+        // background-color: #fff;
         padding: 2rem;
         border-radius: .5rem;
         &-member {
