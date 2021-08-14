@@ -43,7 +43,7 @@ function Nav({
 
                         return (
                             <li key={i} className="Navigation__items_item">
-                                <NavLink to={`/transaction/${item.sc_key}`} className="Navigation__items_item_link active">
+                                <NavLink exact to={`/transaction/${item.sc_key}`} className="Navigation__items_item_link">
                                     <h3>{item.created_at}</h3>
                                     <h4>{item.no_trx}</h4>
                                     <p>{total}</p>
