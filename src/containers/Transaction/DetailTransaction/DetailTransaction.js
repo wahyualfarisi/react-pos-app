@@ -8,7 +8,11 @@ import {
 
 function DetailTransaction({
 
-    onLoadDetail
+    onLoadDetail,
+    isLoading,
+    data,
+    error
+
 }) {
 
     const { id } = useParams();
@@ -22,42 +26,49 @@ function DetailTransaction({
             <section className="DetailTrx_heading">
                 <h1>Detail Transaction</h1>
             </section>
+            {isLoading && <p>Loading...</p>}
 
-            <section className="DetailTrx_Info">
-                <div className="DetailTrx_Info-member">
-                    <h3>INV-002</h3>
-                    <h4>2020-08-12 13:00:34</h4>
-                    <h4>Wahyu Alfarisi - Wahyualfarisi30@gmail.com</h4>
-                    <h4>081317726873</h4>
-                </div>
-
-                <div className="DetailTrx_Info-orders">
-                    <h4>Order List</h4>
-
-                    <ul className="DetailTrx_lists">
-                        <li className="DetailTrx_item">
-                            <figure> 
-                                <img src="https://mmc.tirto.id/image/2019/08/12/nasi-goreng-kambing-istock_ratio-16x9.jpg" alt="Item" />
-                            </figure>
-                            <h5>Nasi Goreng lorem lorem</h5>
-                            <p>1 x</p>
-                            <p>23.000</p>
-                        </li>
-                    </ul>
-
-                    <div className="DetailTrx_total">
-                        <h1>Total</h1>
-                        <p>124.000</p>
+            {!isLoading && data && (
+                <section className="DetailTrx_Info">
+                    <div className="DetailTrx_Info-member">
+                        <h3>{data.no_trx}</h3>
+                        <h4>{data.created_at}</h4>
+                        <h4>{data.name} - {data.email}</h4>
+                        <h4>{data.phone_number}</h4>
                     </div>
-
-                    <div className="DetailTrx_thx">
-                        <h6>Thank You : )</h6>
-                        <p>I Hope You Are Happy</p>
-                        <Link to="/">Order Again</Link>
+    
+                    <div className="DetailTrx_Info-orders">
+                        <h4>Order List</h4>
+    
+                        <ul className="DetailTrx_lists">
+                        {data.get_items.map((item, i) => {
+                            return (
+                                <li key={i} className="DetailTrx_item">
+                                    <figure> 
+                                        <img src={item.get_menu.photo} alt="Item" />
+                                    </figure>
+                                    <h5>{item.get_menu.menu_name}</h5>
+                                    <p>{item.qty} x</p>
+                                    <p>{item.get_menu.price}</p>
+                                </li>
+                            )
+                        })}
+                        </ul>
+    
+                        <div className="DetailTrx_total">
+                            <h1>Total</h1>
+                            <p>124.000</p>
+                        </div>
+    
+                        <div className="DetailTrx_thx">
+                            <h6>Thank You : )</h6>
+                            <p>I Hope You Are Happy</p>
+                            <Link to="/">Order Again</Link>
+                        </div>
                     </div>
-                </div>
-
-            </section>
+    
+                </section>
+            )}
 
         </div>
     )
@@ -65,7 +76,9 @@ function DetailTransaction({
 
 const mapStateToProps = state => {
     return {
-
+        data: state.transaction.detail_transaction,
+        isLoading: state.transaction.isLoadDetail,
+        error: state.transaction.errorDetail
     }
 }
 

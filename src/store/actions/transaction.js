@@ -69,7 +69,8 @@ export const getDetail = (id) => {
         .then(res => {
             console.log(res);
             dispatch({
-                type: DETAIL_TRX_SUCCESS
+                type: DETAIL_TRX_SUCCESS,
+                payload: res.data.results
             })
         })
         .catch(err => {
