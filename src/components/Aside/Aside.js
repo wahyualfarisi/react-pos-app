@@ -30,7 +30,8 @@ function Aside({
     onClearItem,
 
     //Transaction
-    onCreateTransaction
+    onCreateTransaction,
+    isLoadingSubmited
 }) {
 
     const [ form_checkout, setFormCheckout ] = useState({
@@ -306,6 +307,7 @@ function Aside({
                 onClose={toggleModalHandler}
                 formData={form_checkout}
                 changeHandler={changeFormCheckoutHandler}
+                isLoading={isLoadingSubmited}
             />
         </div>
     )
@@ -313,7 +315,8 @@ function Aside({
 
 const mapStateToProps = state => {
     return {
-        order_data: state.orders.data
+        order_data: state.orders.data,
+        isLoadingSubmited: state.orders.isLoadingSubmited
     }
 }
 

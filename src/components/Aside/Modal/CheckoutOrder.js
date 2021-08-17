@@ -1,6 +1,7 @@
 import React from 'react';
 import Modal from '../../UI/Modal/Modal';
 import './CheckoutOrder.scss';
+import Loader from './../../UI/Loader/Loader';
 
 
 function CheckoutOrder({
@@ -8,7 +9,8 @@ function CheckoutOrder({
     onClose,
     onSubmit,
     formData,
-    changeHandler
+    changeHandler,
+    isLoading
 }) {
 
     const formIsValid =  Object.values(formData).every(item => item.isValid === true );
@@ -26,10 +28,10 @@ function CheckoutOrder({
             onClose={onClose}
             title="Checkout Confirmation"
             onSubmit={submitHandler}
-            isDisabledSubmit={!formIsValid}
+            isDisabledSubmit={!formIsValid || isLoading}
        >
             <div className="CheckoutOrder">
-                {Object.keys(formData).map((item, i) => {
+                {!isLoading ? Object.keys(formData).map((item, i) => {
                     return (
                         <div className="form-group" key={i}>
                             <label htmlFor="email">{formData[item].label}</label>
@@ -46,8 +48,13 @@ function CheckoutOrder({
                             <div>{formData[item].error}</div>
                         </div>
                     )
-                })}
+                }) : (
+                    <div className="CheckoutOrder_Loader">
+                        <Loader />
+                    </div>
+                )}
             </div>
+            
        </Modal>
     )
 }

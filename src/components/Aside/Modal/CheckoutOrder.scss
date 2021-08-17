@@ -1,5 +1,10 @@
 .CheckoutOrder {
 
+    &_Loader{ 
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 }
 
 .form-group {
