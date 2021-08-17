@@ -6,6 +6,7 @@ import { FiArrowRight } from 'react-icons/fi'
 import {
     getDetail
 } from './../../../store/actions/transaction';
+import { formatRupiah } from './../../../utils/index';
 
 function DetailTransaction({
 
@@ -21,6 +22,25 @@ function DetailTransaction({
     useEffect( () => {
         onLoadDetail(id)
     }, [id, onLoadDetail])
+
+    let total = 0;
+    const DisplayItem = !isLoading && data && data.get_items.map((item, i) => {
+
+        total += item.qty * item.get_menu.price
+        
+        
+
+        return (
+            <li key={i} className="DetailTrx_item">
+                <figure> 
+                    <img src={item.get_menu.photo} alt="Item" />
+                </figure>
+                <h5>{item.get_menu.menu_name}</h5>
+                <p>{item.qty} x</p>
+                <p>{formatRupiah(item.get_menu.price.toString()) }</p>
+            </li>
+        )
+    })
 
     return (
         <div className="DetailTrx">
@@ -46,23 +66,12 @@ function DetailTransaction({
                         <h4>Order List</h4>
     
                         <ul className="DetailTrx_lists">
-                        {data.get_items.map((item, i) => {
-                            return (
-                                <li key={i} className="DetailTrx_item">
-                                    <figure> 
-                                        <img src={item.get_menu.photo} alt="Item" />
-                                    </figure>
-                                    <h5>{item.get_menu.menu_name}</h5>
-                                    <p>{item.qty} x</p>
-                                    <p>{item.get_menu.price}</p>
-                                </li>
-                            )
-                        })}
+                            {DisplayItem}
                         </ul>
     
                         <div className="DetailTrx_total">
                             <h1>Total</h1>
-                            <p>124.000</p>
+                            <p>{ formatRupiah(total.toString())} </p>
                         </div>
     
                         <div className="DetailTrx_thx">

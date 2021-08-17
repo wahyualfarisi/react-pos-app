@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import debounce from 'lodash.debounce';
 
 //action
-import { getMenu, clearMenu } from '../../store/actions/menu';
+import { getMenu, clearMenu, setActiveMenu, loadMoreMenu, searchMenu, backState } from '../../store/actions/menu';
 import { addToOrder } from './../../store/actions/orders';
 
 import './Menu.scss';
@@ -16,6 +16,8 @@ import MenuItem from '../../components/Menu/MenuItem/MenuItem';
 
 
 const Menu = ({
+    query,
+
     onLoadMenu,
     isLoading,
     error,
@@ -23,19 +25,13 @@ const Menu = ({
     datapage,
     //orders
     onAddOrder,
-    onClearMenu
+    onClearMenu,
+    onSetActiveMenu,
+    onLoadMore,
+    onSearchMenu,
+    onBackToState
 }) => {
 
-    const [query, setQuery] = useState({
-        category: [ 
-            { name: 'All' }, 
-            { name: 'Makanan' }, 
-            { name: 'Minuman' } 
-        ],
-        isActiveCategory: 'All',
-        searchText: null,
-        page: 1
-    });
   
     const [selectedMenu, setSelectedMenu] = useState(null);
     const [isOpenConfirmMenu, setIsOpenConfirmMenu] = useState(false);
@@ -43,30 +39,25 @@ const Menu = ({
 
     const changeHandler = event => {
         onClearMenu();
-        setQuery(prevState => {
-            return {
-                ...prevState,
-                searchText: event.target.value,
-                page: 1,
-                isActiveCategory: 'All'
-            }
-        })
+        onSearchMenu(event.target.value)
     }
 
     const debounceChangeHandler = useMemo(() => {
         return debounce(changeHandler, 400)
     }, [  ])
     
+    useEffect( () => {
+        onBackToState()
+    }, [ onBackToState ])
 
     useEffect( () => {
-        
+
         onLoadMenu({
             isActiveCategory: query.isActiveCategory,
             page: query.page,
             searchText: query.searchText
         });
-        
-
+    
         return () => {
             debounceChangeHandler.cancel()
         }
@@ -74,15 +65,9 @@ const Menu = ({
     }, [ query, onLoadMenu, debounceChangeHandler ])
 
 
-    const setActiveMenu = (menuName) => {
+    const activeMenuHandler = (menuName) => {
         onClearMenu()
-        setQuery(prevState => {
-            return {
-                ...prevState,
-                isActiveCategory: menuName,
-                page: 1
-            }
-        });
+        onSetActiveMenu(menuName);
     }
 
     const onSelectMenuHandler = ( item ) => {
@@ -100,18 +85,6 @@ const Menu = ({
         setIsOpenConfirmMenu(false);
     }
 
-    const onLoadMore = () => {
-        setQuery(prevState => {
-            return {
-                ...prevState,
-                page: prevState.page + 1
-            }
-        })
-    }
-
-   
-
-   
 
     return (
         <div className="Menu">
@@ -120,6 +93,7 @@ const Menu = ({
                 <h1>Menu</h1>
                 <input 
                     placeholder="Search Makanan, Minuman, dll"
+                    
                     onChange={debounceChangeHandler}
                 />
             </section>
@@ -128,7 +102,7 @@ const Menu = ({
             <Categorys 
                 category={query.category} 
                 isActiveCategory={query.isActiveCategory} 
-                setActiveMenu={(name) => setActiveMenu(name)}
+                setActiveMenu={(name) => activeMenuHandler(name)}
                 searchText={query.searchText}  
                 datapage={datapage}              
             />
@@ -139,20 +113,15 @@ const Menu = ({
                 {data 
                     && data.length > 0 
                     && data.map((item, i) => 
-                    <MenuItem 
-                    key={i} 
-                    {...item} 
-                    onSelected={(obj) => 
-                        onSelectMenuHandler(obj)} 
-                    />
+                        <MenuItem 
+                            key={i} 
+                            {...item} 
+                            onSelected={(obj) => onSelectMenuHandler(obj)} 
+                        />
                     )
                 }
                
-                {isLoading && (
-                <div className="Loader-center">
-                    <Loader />
-                </div>
-                )}
+                {isLoading && (<div className="Loader-center"><Loader /> </div>)}
                 {error && <p>Something went wrong!</p>}
             </section>
             {/*  Menu items End  */}
@@ -183,7 +152,8 @@ const mapStateToProps = state => {
         isLoading: state.menu.isLoading,
         data: state.menu.data,
         error: state.menu.error,
-        datapage: state.menu.page
+        datapage: state.menu.page,
+        query: state.menu.query
     }
 }
 
@@ -191,7 +161,11 @@ const mapDispatchToProps = dispatch => {
     return {
         onLoadMenu: ( query ) => dispatch( getMenu(query)  ),
         onAddOrder: (items) => dispatch( addToOrder(items) ),
-        onClearMenu: () => dispatch( clearMenu() )
+        onClearMenu: () => dispatch( clearMenu() ),
+        onSetActiveMenu: (menuName) => dispatch( setActiveMenu(menuName) ),
+        onLoadMore: () => dispatch( loadMoreMenu() ),
+        onSearchMenu: (value) => dispatch( searchMenu(value) ),
+        onBackToState: () => dispatch(backState())
     }
 }
 

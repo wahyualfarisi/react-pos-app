@@ -4,6 +4,7 @@ import './Aside.scss';
 import { FiEdit, FiTrash, FiCheck  } from 'react-icons/fi';
 import OpenOrderMobileContext from './../../context/open-order-mobile-context';
 import ModalCheckout from './Modal/CheckoutOrder';
+import { formatRupiah } from './../../utils/index';
 import { connect } from 'react-redux';
 import { 
         removeItemOrder, 
@@ -202,7 +203,7 @@ function Aside({
                                     />
                                     <h3>{item.menu_name}</h3>
                                 </div>
-                                <p className="mb-small">{item.price}</p>
+                                <p className="mb-small">{formatRupiah(item.price.toString())}</p>
                                 {!item.notes && !item.showInput && (
                                     <button 
                                         className="Order__Menu_notes_btn"
@@ -272,7 +273,7 @@ function Aside({
                 <div className="Order__totals">
                     <div>
                         <h3>Total</h3>
-                        <h1>Rp. {total}</h1>
+                        <h1>Rp. {formatRupiah(total.toString())}</h1>
                         <p>{order_data.length} Items</p>
                     </div>
                     <button 

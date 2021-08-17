@@ -51,6 +51,7 @@
     display: grid;
     margin-bottom: 10rem;
     grid-row-gap: 0.8rem;
+
     &-item {
       display: grid;
       grid-template-columns: 1fr 13rem 1fr;
@@ -65,6 +66,10 @@
 
       @media only screen and (max-width: $bp-largest) {
         grid-template-columns: 1fr 1fr 1fr;
+      }
+
+      @media only screen and (max-width: $bp-large) {
+        display: none;
       }
     }
   }

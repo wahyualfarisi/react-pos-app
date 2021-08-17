@@ -1,4 +1,5 @@
 import React from 'react'
+import { formatRupiah } from './../../../utils/index';
 
 const MenuItem = ({ photo, menu_name, price, onSelected, id }) => {
     
@@ -24,7 +25,7 @@ const MenuItem = ({ photo, menu_name, price, onSelected, id }) => {
             <div className="Menu__lists-item-info">
                 <div>
                     <h4>{menu_name.length > 20 ? `${menu_name.slice(0, 20)}...` : menu_name }</h4>
-                    <p>{price}</p>
+                    <p>{formatRupiah(price.toString())}</p>
                 </div>
             </div>
         </div>

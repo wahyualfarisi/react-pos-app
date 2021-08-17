@@ -3,6 +3,11 @@ export const LOAD_MENU_SUCCESS = 'LOAD_MENU_SUCCESS';
 export const LOAD_MENU_FAILED = 'LOAD_MENU_FAILED';
 export const CLEAR_DATA_MENU = 'CLEAR_DATA_MENU';
 
+//Menu
+export const SET_ACTIVE_MENU = 'SET_ACTIVE_MENU';
+export const LOAD_MORE = 'LOAD_MORE';
+export const SEARCH_MENU = 'SEARCH_MENU';
+export const BACK_STATE = 'BACK_STATE';
 
 // ORDER
 export const ADD_TO_ORDER = 'ADD_TO_ORDER';

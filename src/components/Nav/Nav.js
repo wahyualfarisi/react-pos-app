@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import {
     getTransaction
 } from './../../store/actions/transaction';
+import { formatRupiah } from './../../utils/index';
 
 function Nav({
     transaction,
@@ -46,7 +47,7 @@ function Nav({
                                 <NavLink exact to={`/transaction/${item.sc_key}`} className="Navigation__items_item_link">
                                     <h3>{item.created_at}</h3>
                                     <h4>{item.no_trx}</h4>
-                                    <p>{total}</p>
+                                    <p>{formatRupiah(total.toString())}</p>
                                     <button>
                                         Detail
                                         <FiArrowRightCircle className="btn_icon" />

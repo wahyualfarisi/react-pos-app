@@ -1,3 +1,5 @@
+@import "./../../../variables";
+
 .modal {
   position: fixed;
   left: 0;
@@ -20,6 +22,10 @@
     //animation
     transform: translateY(-200px);
     transition: all 0.3s ease-in-out;
+    
+    @media only screen and (max-width: $bp-verysmall) {
+      margin: 1rem;
+    }
   }
 
   &-header {
