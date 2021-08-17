@@ -1,6 +1,7 @@
 import { 
     BACK_STATE,
     CLEAR_DATA_MENU,
+    DETAIL_TRX_START,
     LOAD_MENU_FAILED,
     LOAD_MENU_START, 
     LOAD_MENU_SUCCESS,
@@ -64,7 +65,11 @@ const menu = (state = initialState, action) => {
             return {
                 ...state,
                 data: [],
-                page: null
+                page: null,
+                query: {
+                    ...state.query,
+                    page: 1
+                }
             }
 
         case SET_ACTIVE_MENU:
@@ -94,6 +99,18 @@ const menu = (state = initialState, action) => {
                     searchText: action.payload,
                     page: 1,
                     isActiveCategory: 'All'
+                }
+            }
+
+
+        case DETAIL_TRX_START:
+            return {
+                ...state,
+                data: [],
+                page: null,
+                query: {
+                    ...state.query,
+                    page: 1
                 }
             }
 

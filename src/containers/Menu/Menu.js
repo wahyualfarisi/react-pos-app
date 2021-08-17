@@ -32,6 +32,7 @@ const Menu = ({
     onBackToState
 }) => {
 
+    const { page, searchText, isActiveCategory } = query;
   
     const [selectedMenu, setSelectedMenu] = useState(null);
     const [isOpenConfirmMenu, setIsOpenConfirmMenu] = useState(false);
@@ -47,22 +48,23 @@ const Menu = ({
     }, [  ])
     
     useEffect( () => {
+        console.log('back state')
         onBackToState()
     }, [ onBackToState ])
 
     useEffect( () => {
 
         onLoadMenu({
-            isActiveCategory: query.isActiveCategory,
-            page: query.page,
-            searchText: query.searchText
+            isActiveCategory: isActiveCategory,
+            page: page,
+            searchText: searchText
         });
     
         return () => {
             debounceChangeHandler.cancel()
         }
 
-    }, [ query, onLoadMenu, debounceChangeHandler ])
+    }, [ isActiveCategory, page, searchText, onLoadMenu, debounceChangeHandler ])
 
 
     const activeMenuHandler = (menuName) => {

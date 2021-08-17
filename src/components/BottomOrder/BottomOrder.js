@@ -1,19 +1,38 @@
 import React from 'react'
 import './BottomOrder.scss';
+import { connect } from 'react-redux';
+import { formatRupiah } from './../../utils/index';
 
-function BottomOrder({ onClick }) {
+function BottomOrder({ onClick, order_data }) {
+
+    const subTotalArr = order_data.map(item => item.price * item.qty);
+
+    const total = subTotalArr.reduce((a, b) => a + b , 0);
+
+
     return (
         <div className="BottomOrder">
             <div className="BottomContainer">
                 <div className="BottomContainer__info">
-                    <p>3 Items</p>
-                    <h1>Rp, 1.230.000</h1>
+                    <p>{order_data.length} Items</p>
+                    <h1>Rp, {formatRupiah(total.toString())}</h1>
                 </div>
-                <button onClick={onClick} className="BottomContainer__btn">SHOW DETAIL</button>
+                <button 
+                    disabled={order_data.length === 0}
+                    onClick={onClick} 
+                    className="BottomContainer__btn">
+                    SHOW DETAIL
+                </button>
             </div>
             
         </div>
     )
 }
 
-export default BottomOrder
+const mapStateToProps = state => {
+    return {
+        order_data: state.orders.data
+    }
+}
+
+export default connect(mapStateToProps, null) (BottomOrder)

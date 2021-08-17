@@ -121,6 +121,10 @@ function Aside({
                 toggleModalHandler();
                 clearForm()
                 window.location.hash = `/transaction/${res.sc_key}`
+
+                if( OrderMenuMobileCtx.isOpen ){
+                    OrderMenuMobileCtx.onToggle();
+                }
             }
         });
     }
@@ -197,13 +201,10 @@ function Aside({
                             <img src={item.photo} alt="Makanan" className="Order__Menu_img" />
                             <div className="Order__Menu">
                                 <div className="Order__Menu_title">
-                                    <FiTrash 
-                                        className="Icon" 
-                                        onClick={() => selectedItem(i, 'remove_item')} 
-                                    />
                                     <h3>{item.menu_name}</h3>
                                 </div>
                                 <p className="mb-small">{formatRupiah(item.price.toString())}</p>
+                               
                                 {!item.notes && !item.showInput && (
                                     <button 
                                         className="Order__Menu_notes_btn"
@@ -256,12 +257,20 @@ function Aside({
                             </div>
                             <div className="Order__Action">
                                 <button 
+                                    className="Order__Action_Remove" 
+                                    onClick={() => selectedItem(i, 'remove_item')} 
+                                >
+                                    <FiTrash />
+                                </button>
+                                <button 
+                                    className="Order__Action_Decrease"
                                     onClick={() => selectedItem(i, 'decrease')}
                                     disabled={item.qty === 1}
                                     >-
                                 </button>
                                 <span>{item.qty}</span>
                                 <button 
+                                    className="Order__Action_Increase"
                                     onClick={() => selectedItem(i, 'increase')}
                                     >+
                                 </button>
