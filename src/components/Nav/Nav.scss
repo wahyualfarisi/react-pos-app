@@ -83,15 +83,14 @@
           background-color: transparent;
           font-size: 0.4s;
           cursor: pointer;
+          color: var(--color-grey-dark-4);
 
           .btn_icon {
             margin-left: 0.2rem;
+            color: var(--color-grey-dark-4);
           }
         }
       }
     }
   }
-}
-
-.EmptyTransaction {
 }

@@ -28,7 +28,7 @@ function Nav({
     return (
         <div className="Nav">
             <div className="Navigation">
-                <h1 className="Navigation__heading mb-medium">History</h1>
+                <h1 className="Navigation__heading mb-medium">Last Orders</h1>
                 {data.length === 0 && (
                 <div className="EmptyTransaction">
                     <h3>You have not made any transaction yet</h3>

@@ -1,3 +1,5 @@
+@import "./../../variables";
+
 .Header {
   background-color: var(--color-primary);
   grid-row: 1 / 2;
@@ -10,16 +12,38 @@
   z-index: 1;
 
   &__logo {
-    padding: 0.7rem;
+    margin-left: 2rem;
+    display: flex;
+    align-items: center;
+    height: 100%;
+
+    @media only screen and (max-width: $bp-verysmall) {
+      margin-left: 1rem;
+    }
+
+    & > figure {
+      width: 3rem;
+      height: 3rem;
+
+      & > img {
+        width: 100%;
+        display: block;
+        border: 2px solid var(--color-grey-dark-2);
+        border-radius: 50%;
+      }
+    }
+
     h1 {
       font-weight: 800;
       color: #fff;
       margin: 0;
       padding: 0;
+      margin-left: 1rem;
     }
 
     p {
       color: #fff;
+      margin-left: 1rem;
     }
   }
 }

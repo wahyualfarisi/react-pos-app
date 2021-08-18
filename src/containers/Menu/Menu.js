@@ -95,7 +95,6 @@ const Menu = ({
                 <h1>Menu</h1>
                 <input 
                     placeholder="Search Makanan, Minuman, dll"
-                    
                     onChange={debounceChangeHandler}
                 />
             </section>
