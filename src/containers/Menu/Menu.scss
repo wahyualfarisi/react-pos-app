@@ -149,7 +149,9 @@
       position: relative;
       
       &:hover &-img {
-        opacity: .3;
+        
+        filter: blur(.1rem);
+        -webkit-filter: blur(.1rem);
       }
 
       &:hover &-btnAdd  {
