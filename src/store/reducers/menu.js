@@ -20,7 +20,7 @@ const initialState = {
         category: [ 
             { name: 'All' }, 
             { name: 'Makanan' }, 
-            { name: 'Minuman' } 
+            { name: 'Minuman' },
         ],
         isActiveCategory: 'All',
         searchText: null,
