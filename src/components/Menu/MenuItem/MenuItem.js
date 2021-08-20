@@ -15,7 +15,7 @@ const MenuItem = ({ photo, menu_name, price, onSelected, id }) => {
 
     return (
         <div className="Menu__lists-item">
-            <figure>
+            <figure className="Menu__lists-item-figure">
                 {image}
                 <button
                     className="Menu__lists-item-btnAdd" 
