@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState, useMemo } from 'react';
+import './Menu.scss';
 import { connect } from 'react-redux';
 import debounce from 'lodash.debounce';
 
@@ -6,7 +7,7 @@ import debounce from 'lodash.debounce';
 import { getMenu, clearMenu, setActiveMenu, loadMoreMenu, searchMenu, backState } from '../../store/actions/menu';
 import { addToOrder } from './../../store/actions/orders';
 
-import './Menu.scss';
+//Component
 import BottomOrder from '../../components/BottomOrder/BottomOrder';
 import OpenOrderMobileContext from '../../context/open-order-mobile-context';
 import Loader from '../../components/UI/Loader/Loader';
@@ -31,12 +32,13 @@ const Menu = ({
     onSearchMenu,
     onBackToState
 }) => {
+    const OpenOrderMobileCTX = useContext(OpenOrderMobileContext);
 
     const { page, searchText, isActiveCategory } = query;
   
+    //menu when selected as order
     const [selectedMenu, setSelectedMenu] = useState(null);
     const [isOpenConfirmMenu, setIsOpenConfirmMenu] = useState(false);
-    const OpenOrderMobileCTX = useContext(OpenOrderMobileContext);
 
     const changeHandler = event => {
         onClearMenu();
@@ -48,17 +50,17 @@ const Menu = ({
     }, [  ])
     
     useEffect( () => {
-        console.log('back state')
         onBackToState()
     }, [ onBackToState ])
 
     useEffect( () => {
-
+        
         onLoadMenu({
             isActiveCategory: isActiveCategory,
             page: page,
             searchText: searchText
         });
+        
     
         return () => {
             debounceChangeHandler.cancel()
@@ -68,8 +70,10 @@ const Menu = ({
 
 
     const activeMenuHandler = (menuName) => {
-        onClearMenu()
-        onSetActiveMenu(menuName);
+        if(isActiveCategory !== menuName){
+            onClearMenu()
+            onSetActiveMenu(menuName);
+        }
     }
 
     const onSelectMenuHandler = ( item ) => {
@@ -102,7 +106,7 @@ const Menu = ({
             {/* Category List start  */}
             <Categorys 
                 category={query.category} 
-                isActiveCategory={query.isActiveCategory} 
+                isActiveCategory={isActiveCategory} 
                 setActiveMenu={(name) => activeMenuHandler(name)}
                 searchText={query.searchText}  
                 datapage={datapage}              

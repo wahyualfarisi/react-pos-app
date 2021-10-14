@@ -10,8 +10,6 @@ import {
  } from './action';
 import { fetchMenu } from './../../api/menu';
 
-
-
 export const getLoadStart = () => ({ type: LOAD_MENU_START });
 
 export const getMenu = query => {
@@ -19,11 +17,9 @@ export const getMenu = query => {
         dispatch( getLoadStart() );
         fetchMenu(query)
         .then(res => {
-            console.log( res); 
             dispatch({ type: LOAD_MENU_SUCCESS, payload: res.data.results })
         })
         .catch(err => {
-            console.log(err);
             dispatch({ type: LOAD_MENU_FAILED, error: err.message })
         })
     }
